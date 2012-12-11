@@ -4,7 +4,7 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'sputnik/version'
 
 Gem::Specification.new do |gem|
-  gem.name          = "sputnik"
+  gem.name          = "sputnik1"
   gem.version       = Sputnik::VERSION
   gem.authors       = ["Charles Lowell"]
   gem.email         = ["cowboyd@thefrontside.net"]
