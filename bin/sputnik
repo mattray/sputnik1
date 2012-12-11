@@ -1,0 +1,5 @@
+#!/usr/bin/env ruby
+
+require 'sputnik/cli'
+
+Sputnik::CLI.start *ARGV
