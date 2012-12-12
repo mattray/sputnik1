@@ -11,6 +11,7 @@ Gem::Specification.new do |gem|
   gem.description   = %q{manage your sputnik profile}
   gem.summary       = %q{discover, install, develop and share your Sputnik profile}
   gem.homepage      = "http://github.com/sputnik"
+  gem.license       = 'Apache'
 
   gem.files         = `git ls-files`.split($/)
   gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
