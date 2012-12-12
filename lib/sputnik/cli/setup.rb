@@ -2,6 +2,8 @@ module Sputnik
   class CLI
     class Setup
       def call(*args)
+        require 'rubygems'
+        #gem 'sputnik-cloudlauncher'
         logical_paths(Gem.find_files('sputnik/plugin/**/*.rb')).each do |path|
           Kernel.require path
         end
