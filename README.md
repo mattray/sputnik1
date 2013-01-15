@@ -19,7 +19,8 @@ Currently, there are two extensions:
 License
 =======
 
-Copyright: 2012 Dell, Inc
+Copyright: 2012-2013 Dell, Inc
+Copyright: 2012-2013 Opscode, Inc
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
