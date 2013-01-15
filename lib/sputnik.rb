@@ -1,2 +1,3 @@
-require "sputnik/version"
-require 'sputnik/plugin'
+require 'sputnik/version'
+require 'sputnik/cli'
+#require 'sputnik/plugin'
