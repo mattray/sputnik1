@@ -1,9 +1,9 @@
 require 'mixlib/cli'
 
 require 'sputnik'
-# require 'sputnik/cli/namespace_command_loader'
-# require 'sputnik/cli/console'
-# require 'sputnik/cli/setup'
+require 'sputnik/cli/namespace_command_loader'
+require 'sputnik/cli/console'
+require 'sputnik/cli/setup'
 
 module Sputnik
   class CLI
@@ -35,27 +35,25 @@ module Sputnik
     :proc => lambda { |v| puts "Sputnik: #{::Sputnik::VERSION}" },
     :exit => 0
 
-    def initialize(argv=[])
-      super()
-      # @loader = NamespaceCommandLoader.new
-      # @console = Console.new
-      # @setup = Setup.new
-      parse_and_validate_options
+    def initialize
+      super
+      @loader = NamespaceCommandLoader.new
+      @setup = Setup.new
     end
 
     def run
-      puts "WHAT UP DOG?"
-      #   @setup.call *args
-      #   if cmd = @loader[args.first]
-      #     puts "cli:CMD: #{cmd}"
-      #     cmd.call *args.slice(1..-1)
-      #     return 0
-      #   end
-      #   fail UnknownCommandError, args.first
-      # rescue Exception => e
-      #   puts "cli:Exception: #{e}"
-      #   @console.error(e)
-      #   e.respond_to?(:to_exit_status) ? e.to_exit_status : 1
+      parse_and_validate_options
+      plugin = parse_plugin
+      @setup.call
+      if cmd = @loader[plugin]
+        cmd.call
+        return 0
+      else
+        puts "Unknown '#{plugin}' plugin!"
+        require 'pry'
+        binding.pry
+        return 1
+      end
     end
 
     #cargo culted from knife
@@ -63,13 +61,13 @@ module Sputnik
       # Checking ARGV validity *before* parse_options because
       # parse_options mangles ARGV in some situations
       if no_command_given?
-        ARGV << "--help"
+        ARGV << '--help'
         print_help_and_exit(1, NO_PLUGIN_GIVEN)
       elsif no_plugin_given?
         if (want_help? || want_version?)
           print_help_and_exit
         else
-          ARGV << "--help"
+          ARGV << '--help'
           print_help_and_exit(2, NO_PLUGIN_GIVEN)
         end
       end
@@ -101,12 +99,10 @@ module Sputnik
       exit exitcode
     end
 
-  end
-
-  class UnknownCommandError < StandardError
-    def initialize(command)
-      super "unknown command #{command}"
+    #called after parse_and_validate_options, so assume ARGV is good
+    def parse_plugin
+      return ARGV[0]
     end
-  end
 
+  end
 end
