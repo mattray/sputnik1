@@ -54,10 +54,8 @@ module Sputnik
       end
     end
 
-    #cargo culted from knife
+    #lightly cargo culted from knife
     def parse_and_validate_options
-      # Checking ARGV validity *before* parse_options because
-      # parse_options mangles ARGV in some situations
       if no_command_given?
         ARGV << '--help'
         print_help_and_exit(1, NO_PLUGIN_GIVEN)
