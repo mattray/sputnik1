@@ -4,16 +4,17 @@ Sputnik is a family of software originally developed as an add-on for the Dell
 XPS 13 Developer edition (aka Project Sputnik)
 
 This rubygem provides the main `sputnik` command and a framework for extending
-it.
+it with plugins.
 
-Currently, there are two extensions:
+Currently, there are three plugins:
 
-* [sputnik-profile][1]
-* [sputnik-cloudlauncher][2]
+* [sputnik-example][1] (example with documentation for writing your own plugins)
+* [sputnik-profile][2]
+* [sputnik-cloudlauncher][3] (manages infrastructure with Chef)
 
-[1]: https://github.com/sputnik/sputnik-profile
-[2]: https://github.com/sputnik/sputnik-cloudlauncher
-
+[1]: https://github.com/sputnik/sputnik-example
+[2]: https://github.com/sputnik/sputnik-profile
+[3]: https://github.com/sputnik/sputnik-cloudlauncher
 
 
 License
