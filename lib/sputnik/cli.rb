@@ -50,9 +50,7 @@ module Sputnik
         return 0
       else
         puts "Unknown '#{plugin}' plugin!"
-        require 'pry'
-        binding.pry
-        return 1
+        exit 1
       end
     end
 
