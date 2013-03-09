@@ -1,9 +1,11 @@
+require 'rubygems'
+
 module Sputnik
   class CLI
     class Setup
-      def call(*args)
+      def call
         logical_paths(Gem.find_files('sputnik/plugin/**/*.rb')).each do |path|
-          Kernel.require path
+          require path
         end
       end
 

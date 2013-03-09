@@ -1,42 +1,42 @@
 require 'mixlib/cli'
 
 module Sputnik
-  DEBUG = false
   class Plugin
     include Mixlib::CLI
 
-    def self.call(*args)
-      plugin = new
-      plugin.parse_options args
+    #this should be overridden
+    banner('Usage: sputnik [plugin] [options]')
+
+    option :debug,
+    :long => '--debug',
+    :description => 'Enable debugging if available',
+    :boolean => true
+
+    option :version,
+    :short => '-v',
+    :long => '--version',
+    :description => 'Show Sputnik plugin version',
+    :boolean => true,
+    :proc => nil, #gets defined in the self.call
+    :exit => 0
+
+    def self.call
+      parent = Sputnik::Plugin.new
+      plugin = self.new
+      name = plugin.class.name.split("::").last
+      parent.options[:version][:proc] = Proc.new { puts "Sputnik #{name}: #{plugin.version}" }
+      plugin.options.merge!(parent.options) #merge base options
+      plugin.parse_options
       plugin.call
     end
 
-    def call(*args)
-
+    def version
+      return "unknown"
     end
 
-    # option :debug,
-    #   :boolean => true,
-    #   :default => false,
-    #   :long => "--debug",
-    #   :description => "Show lots of Sputnik debugging output.",
-    #   :proc => Proc.new { |key| Sputnik::DEBUG = key }
-    #
-    # option :help,
-    #   :short => "-h",
-    #   :long => "--help",
-    #   :description => "Show this message",
-    #   :on => :tail,
-    #   :boolean => true,
-    #   :show_options => true,
-    #   :exit => 0
-    #
-    # option :version,
-    #   :short => "-v",
-    #   :long => "--version",
-    #   :description => "Show Test Kitchen version",
-    #   :boolean => true,
-    #   :proc => lambda {|v| puts "sputnik: #{::Sputnik::VERSION}"},
-    #   :exit => 0
+    def call
+      puts "Sputnik::Plugin.call (YOU SHOULD DEFINE THIS!)"
+    end
+
   end
 end
