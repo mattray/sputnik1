@@ -16,7 +16,19 @@
 # limitations under the License.
 #
 
-require 'sputnik/version'
-require 'sputnik/cli'
-require 'sputnik/config'
-require 'sputnik/plugin'
+require 'mixlib/config'
+
+module Sputnik
+  class Config
+    extend Mixlib::Config
+
+    debug false
+
+    # logging
+    log_level :info
+    log_location STDOUT
+
+    help false
+
+  end
+end

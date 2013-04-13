@@ -19,6 +19,7 @@ Gem::Specification.new do |gem|
   gem.require_paths = ["lib"]
 
   gem.add_dependency 'mixlib-cli'
+  gem.add_dependency 'mixlib-config'
 
   gem.add_development_dependency "rspec"
   gem.add_development_dependency "rspec-spies"
