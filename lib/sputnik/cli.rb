@@ -27,6 +27,18 @@ module Sputnik
     :show_options => true,
     :exit => 0
 
+    option :log_level,
+    :short => "-l LEVEL",
+    :long => "--log_level LEVEL",
+    :description => "Set the log level (debug, info, warn, error, fatal)",
+    :proc => lambda { |l| l.to_sym }
+
+    option :log_location,
+    :short => "-L LOGLOCATION",
+    :long => "--logfile LOGLOCATION",
+    :description => "Set the log file location, defaults to STDOUT",
+    :proc => nil
+
     option :version,
     :short => '-v',
     :long => '--version',
@@ -43,9 +55,11 @@ module Sputnik
 
     def run
       parse_and_validate_options
+      configure_logging
       plugin = parse_plugin
       @setup.call
       if cmd = @loader[plugin]
+        Sputnik::Log.debug("loading plugin: #{plugin}")
         cmd.call
         return 0
       else
@@ -98,6 +112,12 @@ module Sputnik
     #called after parse_and_validate_options, so assume ARGV is good
     def parse_plugin
       return ARGV[0]
+    end
+
+    def configure_logging
+      Sputnik::Log.init(Sputnik::Config[:log_location])
+      Sputnik::Log.level = Sputnik::Config[:log_level]
+      Sputnik::Log.level = :debug if Sputnik::Config[:debug]
     end
 
   end

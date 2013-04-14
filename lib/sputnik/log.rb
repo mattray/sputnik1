@@ -16,8 +16,14 @@
 # limitations under the License.
 #
 
-require 'sputnik/version'
-require 'sputnik/cli'
-require 'sputnik/config'
-require 'sputnik/log'
-require 'sputnik/plugin'
+require 'mixlib/log'
+
+module Sputnik
+  class Log
+    extend Mixlib::Log
+
+    Mixlib::Log::Formatter.show_time = false
+
+  end
+end
+

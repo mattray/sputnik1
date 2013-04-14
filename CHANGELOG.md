@@ -1,8 +1,7 @@
 # 0.2.0 #
 
 * added Sputnik::Config
-COMMON LOGGING PER SPICEWEASEL
-COMMON DEBUGGING PER SPICEWEASEL
+* added Sputnik::Log
 
 # 0.1.0 #
 
