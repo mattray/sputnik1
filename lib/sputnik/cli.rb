@@ -49,13 +49,15 @@ module Sputnik
 
     def initialize
       super
+      parse_options
+      Config.merge!(@config)
+      configure_logging
       @loader = NamespaceCommandLoader.new
       @setup = Setup.new
     end
 
     def run
       parse_and_validate_options
-      configure_logging
       plugin = parse_plugin
       @setup.call
       if cmd = @loader[plugin]
@@ -70,6 +72,7 @@ module Sputnik
 
     #lightly cargo culted from knife
     def parse_and_validate_options
+      Sputnik::Log.debug("parse_and_validate_options")
       if no_command_given?
         ARGV << '--help'
         print_help_and_exit(1, NO_PLUGIN_GIVEN)
