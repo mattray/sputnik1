@@ -13,11 +13,6 @@ module Sputnik
 
     banner('Usage: sputnik [plugin] [options]')
 
-    option :debug,
-    :long => '--debug',
-    :description => 'Verbose debugging messages',
-    :boolean => true
-
     option :help,
     :short => '-h',
     :long => '--help',
@@ -26,18 +21,6 @@ module Sputnik
     :boolean => true,
     :show_options => true,
     :exit => 0
-
-    option :log_level,
-    :short => "-l LEVEL",
-    :long => "--log_level LEVEL",
-    :description => "Set the log level (debug, info, warn, error, fatal)",
-    :proc => lambda { |l| l.to_sym }
-
-    option :log_location,
-    :short => "-L LOGLOCATION",
-    :long => "--logfile LOGLOCATION",
-    :description => "Set the log file location, defaults to STDOUT",
-    :proc => nil
 
     option :version,
     :short => '-v',
@@ -49,9 +32,6 @@ module Sputnik
 
     def initialize
       super
-      parse_options
-      Config.merge!(@config)
-      configure_logging
       @loader = NamespaceCommandLoader.new
       @setup = Setup.new
     end
@@ -72,7 +52,6 @@ module Sputnik
 
     #lightly cargo culted from knife
     def parse_and_validate_options
-      Sputnik::Log.debug("parse_and_validate_options")
       if no_command_given?
         ARGV << '--help'
         print_help_and_exit(1, NO_PLUGIN_GIVEN)
@@ -115,12 +94,6 @@ module Sputnik
     #called after parse_and_validate_options, so assume ARGV is good
     def parse_plugin
       return ARGV[0]
-    end
-
-    def configure_logging
-      Sputnik::Log.init(Sputnik::Config[:log_location])
-      Sputnik::Log.level = Sputnik::Config[:log_level]
-      Sputnik::Log.level = :debug if Sputnik::Config[:debug]
     end
 
   end
